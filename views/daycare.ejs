@@ -7,22 +7,43 @@
 </head>
 <body>
     <h1>Daycare</h1>
-    <button onclick="window.location.href='/game/index.html'">Go to Game</button>
-    <!--add a button that feeds your pet if you have enough food-->
+    <button onclick="window.location.href='/index.html'">Go to Game</button>
     <button onclick="feedPet()">Feed Pet</button>
     <script>
+        food = 2; 
         function feedPet() {
-            // Assuming you have a variable `food` that tracks the amount of food
             if (food > 0) {
                 food--;
                 alert('Your pet is happy!');
                 // Change the KabNab to a smile
-                document.getElementById('kabnab').src = 'smile.png';
             } else {
                 alert('Not enough food!');
+                alert('play games to earn more food.');
                 // Change the KabNab to a frown
-                document.getElementById('kabnab').src = 'frown.png';
             }
+        }
+    </script>
+    <p>Food remaining: <span id="food-count">2</span></p>
+    <script>
+        function updateFoodCount() {
+            document.getElementById('food-count').innerText = food;
+        }
+
+        // Call updateFoodCount initially to set the correct food count
+        updateFoodCount();
+
+        // Modify feedPet function to update the food count display
+        function feedPet() {
+            if (food > 0) {
+                food--;
+                alert('Your pet is happy!');
+                // Change the KabNab to a smile
+            } else {
+                alert('Not enough food!');
+                alert('play games to earn more food.');
+                // Change the KabNab to a frown
+            }
+            updateFoodCount();
         }
     </script>
 </body>

@@ -30,7 +30,7 @@ const io = require('socket.io')(server);
 
 const sessionMiddleware = session({
     store: new SQLiteStore({ db: 'sessions.db' }),
-    secret: 'your_secret_key',
+    secret: 'MUG',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // Set to true if using HTTPS
@@ -43,7 +43,9 @@ io.use((socket, next) => {
     sessionMiddleware(socket.request, {}, next);
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
+app.use('/game', express.static(path.join(__dirname, '/game')));
+app.use(express.static(path.join(__dirname, '/game')));
 
 app.set('view engine', 'ejs');
 
@@ -52,6 +54,15 @@ app.get('/login', routes.loginGet);
 app.post('/login', (req, res) => routes.loginPost(req, res, db));
 app.get('/logout', routes.logout);
 app.get('/chat', routes.isAuthenticated, routes.chat);
+app.get('/daycare', (req, res) => {
+    res.render('daycare.ejs');
+});
+app.get('/index', (req, res) => {
+    res.render('index.html');
+});
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
 
 app.get('/profile', (req, res) => {
     if (req.session.user === undefined) {

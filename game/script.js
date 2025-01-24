@@ -16,8 +16,12 @@ var checkDead = setInterval(function () {
     if (blockLeft < 20 && blockLeft > -20 && characterTop >= 130) {
         block.style.animation = "none";
         alert("Game Over. score: " + Math.floor(counter / 100));
+        var food = parseInt(localStorage.getItem("food")) || 0;
+        food += Math.floor(counter / 100);
+        localStorage.setItem("food", food);
         counter = 0;
         block.style.animation = "block 1s infinite linear";
+        window.location.href = "/daycare";
     } else {
         counter++;
         document.getElementById("scoreSpan").innerHTML = Math.floor(counter / 100);
